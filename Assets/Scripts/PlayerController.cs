@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     private Animator m_animator;
+    private bool isdead;
     
 
     // Start is called before the first frame update
@@ -33,12 +34,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pose = Vector3.zero;
         m_animator = GetComponent<Animator>();
+        isdead = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        if (isdead) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         float straightMovement = Input.GetAxis("Horizontal") * rowingRate * Time.fixedDeltaTime;
 
-        Debug.Log(transform.rotation.eulerAngles);
+        //Debug.Log(transform.rotation.eulerAngles);
         float angle = horizontalInput * 1 + transform.rotation.eulerAngles.y;
         //if (horizontalInput != 0)
         //{
@@ -73,18 +75,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (!isdead)
         {
-            if (m_heathboost.boostpoint > 0)
+            if (Input.GetKey(KeyCode.Space))
             {
-                isBoosting = true;
-                m_heathboost.boostpoint -= 0.2f;
+                if (m_heathboost.boostpoint > 0)
+                {
+                    isBoosting = true;
+                    m_heathboost.boostpoint -= 0.2f;
+                }
+                else isBoosting = false;
             }
-            else isBoosting = false;
+            else
+            {
+                isBoosting = false;
+                m_heathboost.boostpoint = Mathf.Min(100, m_heathboost.boostpoint + 0.3f);
+            }
         }
-        else {
-            isBoosting = false;
-            m_heathboost.boostpoint = Mathf.Min(100, m_heathboost.boostpoint+0.3f);
+
+        if (m_heathboost.healthpoint < 0) {
+            isdead = true;
+            m_animator.SetBool("isDead", true);
         }
     }
 

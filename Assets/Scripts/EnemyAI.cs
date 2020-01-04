@@ -23,6 +23,8 @@ public class EnemyAI : MonoBehaviour
 
     public List<GameObject> WayPoints = new List<GameObject>();
 
+    private CannoLogic m_canno;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,8 @@ public class EnemyAI : MonoBehaviour
         m_anim = GetComponent<Animator>();
 
         m_player = GameObject.FindGameObjectWithTag("Player");
+
+        m_canno = GetComponent<CannoLogic>();
     }
 
     // Update is called once per frame
@@ -60,7 +64,14 @@ public class EnemyAI : MonoBehaviour
                     m_state = EnemyState.Patrol;
                     m_navAgent.isStopped = false;
                     m_navAgent.SetDestination(WayPoints[idx_WayPoints].transform.position);
+                    m_canno.activate_fire(false);
                     break;
+                }
+                else
+                {
+                    if (!m_canno.isfiring()) {
+                        m_canno.activate_fire(true);
+                    }
                 }
                 break;
         

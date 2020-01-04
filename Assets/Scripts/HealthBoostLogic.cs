@@ -7,7 +7,8 @@ public class HealthBoostLogic : MonoBehaviour
     public float healthpoint;//0-100
     public float boostpoint;//0-100
 
-
+    [SerializeField]
+    private float damageByCanno;
 
     // Start is called before the first frame update
     void Start()
@@ -17,9 +18,7 @@ public class HealthBoostLogic : MonoBehaviour
         boostpoint = 100;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void loseHealth() {
+        healthpoint -= damageByCanno;
     }
 }
