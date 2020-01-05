@@ -61,6 +61,7 @@ public class CannoLogic : MonoBehaviour
                     //Debug.Log(ShotTimeCounter);
                     ShotTimeCounter = TimeBtwShots;
                     firecount++;
+                    FindObjectOfType<AudioManager>().play("CannoBall");
                     BombLogic new_CannoBall = Instantiate(CannoBall, fire_pos.position, Quaternion.Euler(90, 0, 0));
                     new_CannoBall.speed = CannoBallSpeed;
                     new_CannoBall.setDir(m_player.transform.position - fire_pos.transform.position);

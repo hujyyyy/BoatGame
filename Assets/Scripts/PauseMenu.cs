@@ -38,5 +38,9 @@ public class PauseMenu : MonoBehaviour
 
             }
         }
+
+        if (Input.GetKey(KeyCode.Q) && canvasGroup.interactable) {
+            Application.Quit();
+        }
     }
 }

@@ -19,6 +19,7 @@ public class CameraFollow : MonoBehaviour
     {
         pos_diff = target.transform.position - transform.position;
         reach_limit = false;
+
     }
 
     // Update is called once per frame

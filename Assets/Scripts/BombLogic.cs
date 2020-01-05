@@ -29,6 +29,7 @@ public class BombLogic : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
+            FindObjectOfType<AudioManager>().play("getShot");
             other.gameObject.GetComponent<HealthBoostLogic>().loseHealth();
         }
         Destroy(gameObject);
