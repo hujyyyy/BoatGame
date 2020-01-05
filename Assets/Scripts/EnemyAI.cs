@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public enum EnemyState
 { 
     Patrol,
-    Attack
+    Attack,
+    Freeze
 }
 
 
@@ -43,6 +44,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.Instance.gameover) m_state = EnemyState.Freeze;
         switch (m_state) {
             case EnemyState.Patrol:
                 m_anim.SetBool("isSailing", true);
@@ -72,6 +74,13 @@ public class EnemyAI : MonoBehaviour
                     if (!m_canno.isfiring()) {
                         m_canno.activate_fire(true);
                     }
+
+                }
+                break;
+            case EnemyState.Freeze:
+                if (m_canno.isfiring())
+                {
+                    m_canno.activate_fire(false);
                 }
                 break;
         

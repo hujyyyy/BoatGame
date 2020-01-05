@@ -18,5 +18,11 @@ public class treaureManger : MonoBehaviour
             treasureUI[treasure_count++].SetActive(false);
             treasureUI[treasure_count].SetActive(true);
         }
+        if (treasure_count == max_treasure_count) { 
+            gameManager.Instance.victory = true;
+            gameManager.Instance.gameover = true;
+
+        }
+
     }
 }

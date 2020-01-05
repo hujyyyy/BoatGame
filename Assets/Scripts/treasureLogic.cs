@@ -21,6 +21,7 @@ public class treasureLogic : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<treaureManger>().getNewTreasure();
+            collision.gameObject.GetComponent<HealthBoostLogic>().gainHealth();
             Destroy(gameObject);
         }
 

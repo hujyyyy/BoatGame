@@ -21,4 +21,8 @@ public class HealthBoostLogic : MonoBehaviour
     public void loseHealth() {
         healthpoint -= damageByCanno;
     }
+
+    public void gainHealth() {
+        healthpoint = Mathf.Min(100, healthpoint + damageByCanno);
+    }
 }

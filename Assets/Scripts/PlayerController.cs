@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     //is the boat in boosting mode or not
     private bool isBoosting;
     [SerializeField] private float boostingScale = 3;
+    [SerializeField] private float boostingConsume;
+    [SerializeField] private float boostingRecover;
     private HealthBoostLogic m_heathboost;
 
     //steering left(-1) t0 right(1)
@@ -23,7 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private Animator m_animator;
     private bool isdead;
-    
+
+    private bool deathCheckFlag;//can only be changed once
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
         pose = Vector3.zero;
         m_animator = GetComponent<Animator>();
         isdead = false;
+        deathCheckFlag = true; 
     }
 
     // Update is called once per frame
@@ -75,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         if (!isdead)
         {
             if (Input.GetKey(KeyCode.Space))
@@ -82,20 +87,29 @@ public class PlayerController : MonoBehaviour
                 if (m_heathboost.boostpoint > 0)
                 {
                     isBoosting = true;
-                    m_heathboost.boostpoint -= 0.2f;
+                    m_heathboost.boostpoint -= boostingConsume;
                 }
                 else isBoosting = false;
             }
             else
             {
                 isBoosting = false;
-                m_heathboost.boostpoint = Mathf.Min(100, m_heathboost.boostpoint + 0.3f);
+                m_heathboost.boostpoint = Mathf.Min(100, m_heathboost.boostpoint + boostingRecover);
+            }
+
+
+            if (m_heathboost.healthpoint <= 0)
+            {
+                isdead = true;
+                m_animator.SetBool("isDead", true);
             }
         }
-
-        if (m_heathboost.healthpoint < 0) {
-            isdead = true;
-            m_animator.SetBool("isDead", true);
+        else {
+            if (m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "sunk"&&deathCheckFlag)
+            {
+                gameManager.Instance.gameover = true;
+                deathCheckFlag = false;
+            }
         }
     }
 
