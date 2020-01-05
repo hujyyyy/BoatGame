@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2888527540969216159}
   - component: {fileID: 2888527540969216155}
   - component: {fileID: 2888527540969216152}
+  - component: {fileID: 8337274376474237048}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,3 +172,19 @@ MonoBehaviour:
   healthpoint: 0
   boostpoint: 0
   damageByCanno: 0
+--- !u!114 &8337274376474237048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2888527540969216144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9102a6851c84f71af6256d43ae00e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiving: {fileID: 0}
+  boostingScale: 2
+  boostingConsume: 0.2
+  boostingRecover: 0.2

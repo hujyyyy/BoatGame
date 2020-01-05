@@ -22,7 +22,7 @@ using OscSimpl;
 [ExecuteInEditMode]
 public class OscIn : OscMonoBase
 {
-	[SerializeField] int _port = 7000;
+	[SerializeField] int _port = 12000;
 	[SerializeField] OscReceiveMode _mode = OscReceiveMode.UnicastBroadcast;
 	[SerializeField] string _multicastAddress = string.Empty;
 	[SerializeField] bool _filterDuplicates = true;

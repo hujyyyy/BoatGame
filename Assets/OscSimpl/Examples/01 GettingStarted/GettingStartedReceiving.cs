@@ -14,14 +14,16 @@ namespace OscSimpl.Examples
 		[SerializeField] OscIn _oscIn;
 
 		const string address1 = "/test1";
-		const string address2 = "/test2";
+		//const string address2 = "/test2";
+
+        const string address2 = "/boatcontrol";
 
 
-		void Start()
+        void Start()
 		{
 			// Ensure that we have a OscIn component and start receiving on port 7000.
 			if( !_oscIn ) _oscIn = gameObject.AddComponent<OscIn>();
-			_oscIn.Open( 7000 );
+			_oscIn.Open( 12000 );
 		}
 
 
@@ -65,8 +67,9 @@ namespace OscSimpl.Examples
 				Debug.Log( "Received test2\n" + frameCount + " " + time + " " + random + "\n" );
 			}
 
-			// If you don't know what type of arguments to expect, then you 
-			// can check the type of each argument and get the ones you need.
+            // If you don't know what type of arguments to expect, then you 
+            // can check the type of each argument and get the ones you need.
+            Debug.Log(message.Count());
 			for( int i = 0; i < message.Count(); i++ )
 			{
 				OscArgType argType;
@@ -77,11 +80,13 @@ namespace OscSimpl.Examples
 					case OscArgType.Float:
 						float floatValue;
 						message.TryGet( i, out floatValue );
+                        //Debug.Log(floatValue);
 						// Do something with floatValue here...
 						break;
 					case OscArgType.Int:
 						int intValue;
 						message.TryGet( i, out intValue );
+                        //Debug.Log(intValue);
 						// Do something with intValue here...
 						break;
 				}
