@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     //is the boat in boosting mode or not
     private bool isBoosting;
+    [SerializeField] private GameObject booster;
     [SerializeField] private float boostingScale = 3;
     [SerializeField] private float boostingConsume;
     [SerializeField] private float boostingRecover;
@@ -20,10 +21,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 pose;
 
-    private float turnSpeed = 1.0f;
+    public float turnSpeed = 1.0f;
+    public float movingSpeed = 1.0f;
+    public float rowingSpeed = 0.5f;
     private Rigidbody rb;
 
     private Animator m_animator;
+    private Animator m_booster_anim;
+
     private bool isdead;
 
     private bool deathCheckFlag;//can only be changed once
@@ -37,6 +42,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pose = Vector3.zero;
         m_animator = GetComponent<Animator>();
+        m_booster_anim = booster.GetComponent<Animator>();
         isdead = false;
         deathCheckFlag = true; 
     }
@@ -51,11 +57,12 @@ public class PlayerController : MonoBehaviour
 
         m_animator.SetFloat("rowing", verticalInput);
         m_animator.SetFloat("steering", horizontalInput);
+        m_booster_anim.SetBool("isBoosting", isBoosting);
 
         float straightMovement = Input.GetAxis("Horizontal") * rowingRate * Time.fixedDeltaTime;
 
         //Debug.Log(transform.rotation.eulerAngles);
-        float angle = horizontalInput * 1 + transform.rotation.eulerAngles.y;
+        float angle = horizontalInput * turnSpeed + transform.rotation.eulerAngles.y;
         //if (horizontalInput != 0)
         //{
             //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, angle,0), Time.fixedDeltaTime * turnSpeed);

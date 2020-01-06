@@ -6,6 +6,7 @@ public class PlayerControllerOSC : MonoBehaviour
 {
     public Receiving receiving;
 
+    [SerializeField] private GameObject booster;
     [SerializeField] private float boostingScale = 3;
     [SerializeField] private float boostingConsume;
     [SerializeField] private float boostingRecover;
@@ -23,10 +24,14 @@ public class PlayerControllerOSC : MonoBehaviour
 
     private Vector3 pose;
 
-    private float turnSpeed = 1.0f;
+    public float turnSpeed = 1.0f;
+    public float movingSpeed = 1.0f;
+    public float rowingSpeed = 0.5f;
+
     private Rigidbody rb;
 
     private Animator m_animator;
+    private Animator m_booster_anim;
     private bool isdead;
 
     private bool deathCheckFlag;//can only be changed once
@@ -38,6 +43,7 @@ public class PlayerControllerOSC : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pose = Vector3.zero;
         m_animator = GetComponent<Animator>();
+        m_booster_anim = booster.GetComponent<Animator>();
         isdead = false;
         deathCheckFlag = true;
 
@@ -53,12 +59,14 @@ public class PlayerControllerOSC : MonoBehaviour
         if (isdead) return;
 
         m_animator.SetFloat("rowing", rowingRate);
-        m_animator.speed = Mathf.Max(rowingRate/2,1);
+        m_animator.speed = rowingRate * rowingSpeed;
+        if (m_animator.speed < 0.01f) m_animator.speed = 1;
         m_animator.SetFloat("steering", steering);
+        m_booster_anim.SetBool("isBoosting", isBoosting);
 
 
         //Debug.Log(transform.rotation.eulerAngles);
-        float angle = steering * 1 + transform.rotation.eulerAngles.y;
+        float angle = steering * turnSpeed + transform.rotation.eulerAngles.y;
         //if (horizontalInput != 0)
         //{
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(90, angle,0), Time.fixedDeltaTime * turnSpeed);
