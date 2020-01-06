@@ -5712,6 +5712,7 @@ MonoBehaviour:
   gameUI: {fileID: 47475048}
   Player: {fileID: 1784203062}
   postProcessing: {fileID: 11400000, guid: 36fb8fcda51114fc687b55ff1e2e9f90, type: 2}
+  osc_enable: 0
 --- !u!4 &1794891467
 Transform:
   m_ObjectHideFlags: 0
@@ -6897,6 +6898,11 @@ PrefabInstance:
       propertyPath: booster
       value: 
       objectReference: {fileID: 1431840117}
+    - target: {fileID: 2888527540969216159, guid: 73230de28f6cf46ed80c20ab8abae69c,
+        type: 3}
+      propertyPath: rowingDis
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8337274376474237048, guid: 73230de28f6cf46ed80c20ab8abae69c,
         type: 3}
       propertyPath: receiving

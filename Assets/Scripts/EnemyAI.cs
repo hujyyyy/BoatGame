@@ -20,7 +20,13 @@ public class EnemyAI : MonoBehaviour
     private Animator m_anim;
 
     private GameObject m_player;
-    public float attacting_radius = 2;
+
+    public float attacking_radius = 2;
+    public float attacking_radius_close = 1;
+    public float noise_threshold = 2;
+
+    private float distToPlayer;
+    private float noise_level;
 
     public List<GameObject> WayPoints = new List<GameObject>();
 
@@ -45,11 +51,21 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         if (gameManager.Instance.gameover) m_state = EnemyState.Freeze;
+
+        distToPlayer = (transform.position - m_player.transform.position).magnitude;
+        if (gameManager.Instance.osc_enable) {
+            noise_level = m_player.GetComponent<PlayerControllerOSC>().rowingDis / distToPlayer;
+        }
+        else
+        {
+            noise_level = m_player.GetComponent<PlayerController>().rowingDis / distToPlayer;
+        }
+
         switch (m_state) {
             case EnemyState.Patrol:
                 m_anim.SetBool("isSailing", true);
 
-                if ((transform.position - m_player.transform.position).magnitude <= attacting_radius) {
+                if ((distToPlayer <= attacking_radius&&noise_level>=noise_threshold)|| distToPlayer<attacking_radius_close) {
                     m_state = EnemyState.Attack;
                     m_navAgent.isStopped = true;
                     break;
@@ -61,7 +77,7 @@ public class EnemyAI : MonoBehaviour
                 break;
             case EnemyState.Attack:
                 m_anim.SetBool("isSailing", false);
-                if ((transform.position - m_player.transform.position).magnitude > attacting_radius)
+                if (distToPlayer > attacking_radius)
                 {
                     m_state = EnemyState.Patrol;
                     m_navAgent.isStopped = false;
@@ -107,7 +123,10 @@ public class EnemyAI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1,0,0,0.5f);
-        Gizmos.DrawSphere(transform.position, attacting_radius);
+        Gizmos.color = new Color(1,0.5f,0.5f,0.5f);
+        Gizmos.DrawSphere(transform.position, attacking_radius);
+
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawSphere(transform.position, attacking_radius_close);
     }
 }

@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     //rowing rate in Hz/rows per second
     private float rowingRate;
     //distance per rowing
-    [SerializeField] private float rowingDis;
+    public float rowingDis;
 
     private Vector3 pose;
 
@@ -55,12 +55,12 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        rowingDis = verticalInput * 4;
+
         m_animator.SetFloat("rowing", verticalInput);
         m_animator.SetFloat("steering", horizontalInput);
         m_booster_anim.SetBool("isBoosting", isBoosting);
-
-        float straightMovement = Input.GetAxis("Horizontal") * rowingRate * Time.fixedDeltaTime;
-
+        
         //Debug.Log(transform.rotation.eulerAngles);
         float angle = horizontalInput * turnSpeed + transform.rotation.eulerAngles.y;
         //if (horizontalInput != 0)
@@ -77,10 +77,10 @@ public class PlayerController : MonoBehaviour
         pose.x = Mathf.Sin(Mathf.PI * transform.rotation.eulerAngles.y / 180);
 
         float scale = 1;
-        if (isBoosting&& verticalInput>0) scale *= boostingScale;
+        if (isBoosting&& rowingDis>0) scale *= boostingScale;
 
-        if (verticalInput != 0) { 
-            rb.AddForce(scale * rowingDis * pose * verticalInput);
+        if (rowingDis != 0) { 
+            rb.AddForce(scale * rowingDis * pose/2);
         }
     }
 

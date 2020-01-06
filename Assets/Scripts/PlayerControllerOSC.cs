@@ -18,7 +18,8 @@ public class PlayerControllerOSC : MonoBehaviour
     //rowing rate in Hz/rows per second
     private float rowingRate;
     //distance per rowing
-    private float rowingDis;
+    [HideInInspector]
+    public float rowingDis;
     //is the boat in boosting mode or not
     private bool isBoosting;
 

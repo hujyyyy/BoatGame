@@ -16,6 +16,10 @@ public class gameManager : MonoBehaviour
 
     public PostProcessingProfile postProcessing;
 
+    //settings
+    public bool osc_enable = true;
+    private bool osc_state = true;
+
 
     private void Awake()
     {
@@ -32,6 +36,7 @@ public class gameManager : MonoBehaviour
     {
         gameover = false;
         victory = false;
+        SwitchPlayerCntr();
 
     }
 
@@ -40,6 +45,11 @@ public class gameManager : MonoBehaviour
     {
         if (gameUI == null) gameUI = GameObject.FindWithTag("GameUI");
         if (Player == null) Player = GameObject.FindWithTag("Player");
+        if (osc_state != osc_enable) {
+            osc_state = osc_enable;
+            SwitchPlayerCntr();
+
+        }
     }
 
     public void pauseEffect(bool p)
@@ -84,5 +94,22 @@ public class gameManager : MonoBehaviour
     
     }
 
+    public void enableOSC(bool val) {
+        if (val) osc_enable = true;
+        else osc_enable = false;
+    }
 
+    //player controller needs to be changed with OSC on or off
+    private void SwitchPlayerCntr() {
+        if (osc_enable)
+        {
+            Player.GetComponent<PlayerController>().enabled = false;
+            Player.GetComponent<PlayerControllerOSC>().enabled = true;
+        }
+        else
+        {
+            Player.GetComponent<PlayerController>().enabled = true;
+            Player.GetComponent<PlayerControllerOSC>().enabled = false;
+        }
+    }
 }
