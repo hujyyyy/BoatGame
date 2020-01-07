@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     //is the boat in boosting mode or not
     private bool isBoosting;
     [SerializeField] private GameObject booster;
-    [SerializeField] private float boostingScale = 3;
+    public float boostingScale = 3;
     [SerializeField] private float boostingConsume;
     [SerializeField] private float boostingRecover;
     private HealthBoostLogic m_heathboost;
@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
 
         m_animator.SetFloat("rowing", verticalInput);
         m_animator.SetFloat("steering", horizontalInput);
+        m_animator.speed = rowingRate * rowingSpeed;
+        if (m_animator.speed < 0.01f) m_animator.speed = 1;
         m_booster_anim.SetBool("isBoosting", isBoosting);
         
         //Debug.Log(transform.rotation.eulerAngles);
@@ -120,5 +122,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
- 
+
 }

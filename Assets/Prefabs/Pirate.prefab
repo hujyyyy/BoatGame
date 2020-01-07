@@ -154,7 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 0
-  attacting_radius: 3
+  attacking_radius: 2
+  attacking_radius_close: 1
+  noise_threshold: 2
   WayPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -172,11 +174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13d6199909384f37893a4c97dec7fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDownTime: 2
+  coolDownTime: 1.2
   TimeBtwShots: 0.3
   CannoBallSpeed: 1
   fire_pos: {fileID: 6728903632445750060}
-  CannoBall: {fileID: 0}
+  CannoBall: {fileID: 6579714154499644481, guid: 84e7b1f5c9c3c4477b8f660618ebe5a7,
+    type: 3}
   max_firecount: 3
   m_player: {fileID: 0}
 --- !u!1 &6728903632445750061

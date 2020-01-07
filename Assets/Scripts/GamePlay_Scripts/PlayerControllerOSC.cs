@@ -7,7 +7,7 @@ public class PlayerControllerOSC : MonoBehaviour
     public Receiving receiving;
 
     [SerializeField] private GameObject booster;
-    [SerializeField] private float boostingScale = 3;
+    public float boostingScale = 3;
     [SerializeField] private float boostingConsume;
     [SerializeField] private float boostingRecover;
     private HealthBoostLogic m_heathboost;

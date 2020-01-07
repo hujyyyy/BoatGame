@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.Instance.gameover) m_state = EnemyState.Freeze;
+        if (gameManager.Instance.gameover||m_player.GetComponent<HealthBoostLogic>().healthpoint<=0) m_state = EnemyState.Freeze;
 
         distToPlayer = (transform.position - m_player.transform.position).magnitude;
         if (gameManager.Instance.osc_enable) {
